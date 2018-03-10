@@ -1431,7 +1431,7 @@ namespace Lebedev {
     };
 
     Eigen::Matrix<double,12,4> getSG0AA(double v){
-        double a = 1.0;
+        double a = 1.0/std::sqrt(2.0);
         Eigen::Matrix<double,12,4> xyzw;
         xyzw << \
         0.0,   a,   a, v,\
