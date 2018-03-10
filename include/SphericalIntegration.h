@@ -46,7 +46,7 @@ namespace Lebedev {
     };
 
 
-        enum class Oh {
+    enum class Oh {
             SG001, // etc.
             SG0AA, // etc., A=1/sqrt(2)
             SGAAA, // etc., A=1/sqrt(3)
@@ -55,7 +55,7 @@ namespace Lebedev {
             SGABC, // etc., C=sqrt(1-A^2-B^2), A, B input
         };
 
-        static unsigned points(Oh sg){
+    static unsigned points(Oh sg){
             switch (sg) {
                 case Oh::SG001:
                     return 6;
@@ -1450,7 +1450,7 @@ namespace Lebedev {
     };
 
     Eigen::Matrix<double,8,4> getSGAAA(double v){
-        double a = 1.0 / sqrt ( 3.0 );
+        double a = 1.0/std::sqrt(3.0);
         Eigen::Matrix<double,8,4> xyzw;
         xyzw << \
           a,   a,   a, v,\
@@ -1465,7 +1465,7 @@ namespace Lebedev {
     };
 
     Eigen::Matrix<double,24,4> getSGAAB(double a ,double v){
-        double b = std::sqrt( 1.0 - 2.0 * a * a );
+        double b = std::sqrt(1.0 - 2.0*a*a);
         Eigen::Matrix<double,24,4> xyzw;
         xyzw << \
           a,   a,   b, v,\
@@ -1496,7 +1496,7 @@ namespace Lebedev {
     };
 
     Eigen::Matrix<double,24,4> getSGAB0(double a ,double v){
-        double b = std::sqrt( 1.0 - a * a );
+        double b = std::sqrt(1.0 - a*a);
         Eigen::Matrix<double,24,4> xyzw;
         xyzw << \
           a,   b, 0.0, v,\
@@ -1527,7 +1527,7 @@ namespace Lebedev {
     };
 
     Eigen::Matrix<double,48,4> getSGABC(double a, double b, double v){
-        double c = std::sqrt( 1.0 - a * a - b * b );
+        double c = std::sqrt(1.0 - a*a - b*b);
         Eigen::Matrix<double,48,4> xyzw;
         xyzw << \
           a,   b,   c, v,\
@@ -1580,7 +1580,6 @@ namespace Lebedev {
          -c,  -b,  -a, v;
         return xyzw;
     };
-
 
     Eigen::MatrixX4d generateFromOctahedralSymmetry(const Abv& abv){
         switch (abv.symmetryGroup()){
