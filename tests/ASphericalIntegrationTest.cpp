@@ -16,7 +16,7 @@ public:
 
 TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheck) {
 
-    for (const auto & rule : Lebedev::allRules) {
+    for (const auto & rule : Lebedev::allOrders) {
         auto order = static_cast<unsigned>(rule);
         auto calculated = sphericalIntegrator.getGrid(rule);
 
@@ -42,7 +42,7 @@ TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheck) {
 TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheckElementWise) {
 
     // check all rules
-    for (const auto & rule : Lebedev::allRules) {
+    for (const auto & rule : Lebedev::allOrders) {
         auto order = static_cast<unsigned>(rule);
         auto calculated = sphericalIntegrator.getGrid(rule);
 

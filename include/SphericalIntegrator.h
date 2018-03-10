@@ -46,7 +46,7 @@ namespace Lebedev {
         NumberOfOrders = 32
     };
 
-    const std::array<Order,static_cast<unsigned>(Order::NumberOfOrders)> allRules = {
+    const std::array<Order,static_cast<unsigned>(Order::NumberOfOrders)> allOrders = {
             Order::LD0006, Order::LD0014, Order::LD0026, Order::LD0038, Order::LD0050,
             Order::LD0074, Order::LD0086, Order::LD0110, Order::LD0146, Order::LD0170,
             Order::LD0194, Order::LD0230, Order::LD0266, Order::LD0302, Order::LD0350,
