@@ -8,7 +8,7 @@
 int main() {
     Lebedev::SphericalIntegrator sphericalIntegrator;
 
-    auto arr = sphericalIntegrator.getGrid(Lebedev::RuleOrder::LD0014);
+    auto arr = sphericalIntegrator.getGrid(Lebedev::Order::LD0014);
 
     std::cout << arr << std::endl;
 

@@ -10,7 +10,7 @@
 #include <array>
 
 namespace Lebedev {
-    enum class RuleOrder{
+    enum class Order{
         LD0006 = 6,
         LD0014 = 14,
         LD0026 = 26,
@@ -43,17 +43,17 @@ namespace Lebedev {
         LD4802 = 4802,
         LD5294 = 5294,
         LD5810 = 5810,
-        NumberOfRules = 32
+        NumberOfOrders = 32
     };
 
-    const std::array<RuleOrder,static_cast<unsigned>(RuleOrder::NumberOfRules)> allRules = {
-            RuleOrder::LD0006,RuleOrder::LD0014,RuleOrder::LD0026,RuleOrder::LD0038,RuleOrder::LD0050,
-            RuleOrder::LD0074,RuleOrder::LD0086,RuleOrder::LD0110,RuleOrder::LD0146,RuleOrder::LD0170,
-            RuleOrder::LD0194,RuleOrder::LD0230,RuleOrder::LD0266,RuleOrder::LD0302,RuleOrder::LD0350,
-            RuleOrder::LD0434,RuleOrder::LD0590,RuleOrder::LD0770,RuleOrder::LD0974,RuleOrder::LD1202,
-            RuleOrder::LD1454,RuleOrder::LD1730,RuleOrder::LD2030,RuleOrder::LD2354,RuleOrder::LD2702,
-            RuleOrder::LD3074,RuleOrder::LD3470,RuleOrder::LD3890,RuleOrder::LD4334,RuleOrder::LD4802,
-            RuleOrder::LD5294,RuleOrder::LD5810
+    const std::array<Order,static_cast<unsigned>(Order::NumberOfOrders)> allRules = {
+            Order::LD0006, Order::LD0014, Order::LD0026, Order::LD0038, Order::LD0050,
+            Order::LD0074, Order::LD0086, Order::LD0110, Order::LD0146, Order::LD0170,
+            Order::LD0194, Order::LD0230, Order::LD0266, Order::LD0302, Order::LD0350,
+            Order::LD0434, Order::LD0590, Order::LD0770, Order::LD0974, Order::LD1202,
+            Order::LD1454, Order::LD1730, Order::LD2030, Order::LD2354, Order::LD2702,
+            Order::LD3074, Order::LD3470, Order::LD3890, Order::LD4334, Order::LD4802,
+            Order::LD5294, Order::LD5810
     };
 
     enum class Oh {
@@ -105,7 +105,7 @@ namespace Lebedev {
     public:
         SphericalIntegrator() = default;
 
-        Eigen::MatrixX4d getGrid(RuleOrder order){
+        Eigen::MatrixX4d getGrid(Order order){
             Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
             auto abvs = getSymmetryGroupChain(order);
 
@@ -119,46 +119,46 @@ namespace Lebedev {
         }
 
     private:
-        std::vector<Abv> getSymmetryGroupChain(RuleOrder order) {
+        std::vector<Abv> getSymmetryGroupChain(Order order) {
         switch (order) {
-            case RuleOrder::LD0006:
+            case Order::LD0006:
                 return {Abv(Oh::SG001, 0.1666666666666667)};
-            case RuleOrder::LD0014:
+            case Order::LD0014:
                 return {Abv(Oh::SG001, 0.6666666666666667e-1),
                         Abv(Oh::SGAAA, 0.7500000000000000e-1)};
-            case RuleOrder::LD0026:
+            case Order::LD0026:
                 return {Abv(Oh::SG001, 0.4761904761904762e-1),
                         Abv(Oh::SG0AA, 0.3809523809523810e-1),
                         Abv(Oh::SGAAA, 0.3214285714285714e-1)};
-            case RuleOrder::LD0038:
+            case Order::LD0038:
                 return {Abv(Oh::SG001, 0.9523809523809524e-2),
                         Abv(Oh::SGAAA, 0.3214285714285714e-1),
                         Abv(Oh::SGAB0, 0.4597008433809831, 0.2857142857142857e-1)};
-            case RuleOrder::LD0050:
+            case Order::LD0050:
                 return {Abv(Oh::SG001, 0.1269841269841270e-1),
                         Abv(Oh::SG0AA, 0.2257495590828924e-1),
                         Abv(Oh::SGAAA, 0.2109375000000000e-1),
                         Abv(Oh::SGAAB, 0.3015113445777636, 0.2017333553791887e-1)};
-            case RuleOrder::LD0074:
+            case Order::LD0074:
                 return {Abv(Oh::SG001, 0.5130671797338464e-3),
                         Abv(Oh::SG0AA, 0.1660406956574204e-1),
                         Abv(Oh::SGAAA, -0.2958603896103896e-1),
                         Abv(Oh::SGAAB, 0.4803844614152614, 0.2657620708215946e-1),
                         Abv(Oh::SGAB0, 0.3207726489807764, 0.1652217099371571e-1)};
-            case RuleOrder::LD0086:
+            case Order::LD0086:
                 return {Abv(Oh::SG001, 0.1154401154401154e-1),
                         Abv(Oh::SGAAA, 0.1194390908585628e-1),
                         Abv(Oh::SGAAB, 0.3696028464541502, 0.1111055571060340e-1),
                         Abv(Oh::SGAAB, 0.6943540066026664, 0.1187650129453714e-1),
                         Abv(Oh::SGAB0, 0.3742430390903412, 0.1181230374690448e-1)};
-            case RuleOrder::LD0110:
+            case Order::LD0110:
                 return {Abv(Oh::SG001, 0.3828270494937162e-2),
                         Abv(Oh::SGAAA, 0.9793737512487512e-2),
                         Abv(Oh::SGAAB, 0.1851156353447362, 0.8211737283191111e-2),
                         Abv(Oh::SGAAB, 0.6904210483822922, 0.9942814891178103e-2),
                         Abv(Oh::SGAAB, 0.3956894730559419, 0.9595471336070963e-2),
                         Abv(Oh::SGAB0, 0.4783690288121502, 0.9694996361663028e-2)};
-            case RuleOrder::LD0146:
+            case Order::LD0146:
                 return {Abv(Oh::SG001, 0.5996313688621381e-3),
                         Abv(Oh::SG0AA, 0.7372999718620756e-2),
                         Abv(Oh::SGAAA, 0.7210515360144488e-2),
@@ -166,7 +166,7 @@ namespace Lebedev {
                         Abv(Oh::SGAAB, 0.4174961227965453, 0.6753829486314477e-2),
                         Abv(Oh::SGAAB, 0.1574676672039082, 0.7574394159054034e-2),
                         Abv(Oh::SGABC, 0.1403553811713183, 0.4493328323269557, 0.6991087353303262e-2)};
-            case RuleOrder::LD0170:
+            case Order::LD0170:
                 return {Abv(Oh::SG001, 0.5544842902037365e-2),
                         Abv(Oh::SG0AA, 0.6071332770670752e-2),
                         Abv(Oh::SGAAA, 0.6383674773515093e-2),
@@ -175,7 +175,7 @@ namespace Lebedev {
                         Abv(Oh::SGAAB, 0.4318910696719410, 0.6201670006589077e-2),
                         Abv(Oh::SGAB0, 0.2613931360335988, 0.5477143385137348e-2),
                         Abv(Oh::SGABC, 0.4990453161796037, 0.1446630744325115, 0.5968383987681156e-2)};
-            case RuleOrder::LD0194:
+            case Order::LD0194:
                 return {Abv(Oh::SG001, 0.1782340447244611e-2),
                         Abv(Oh::SG0AA, 0.5716905949977102e-2),
                         Abv(Oh::SGAAA, 0.5573383178848738e-2),
@@ -185,7 +185,7 @@ namespace Lebedev {
                         Abv(Oh::SGAAB, 0.1299335447650067, 0.4106777028169394e-2),
                         Abv(Oh::SGAB0, 0.3457702197611283, 0.5051846064614808e-2),
                         Abv(Oh::SGABC, 0.1590417105383530, 0.8360360154824589, 0.5530248916233094e-2)};
-            case RuleOrder::LD0230:
+            case Order::LD0230:
                 return {Abv(Oh::SG001, -0.5522639919727325e-1),
                         Abv(Oh::SGAAA, 0.4450274607445226e-2),
                         Abv(Oh::SGAAB, 0.4492044687397611, 0.4496841067921404e-2),
@@ -196,7 +196,7 @@ namespace Lebedev {
                         Abv(Oh::SGAB0, 0.5823842309715585, 0.4231083095357343e-2),
                         Abv(Oh::SGAB0, 0.3545877390518688, 0.5198069864064399e-2),
                         Abv(Oh::SGABC, 0.2272181808998187, 0.4864661535886647, 0.4695720972568883e-2)};
-            case RuleOrder::LD0266:
+            case Order::LD0266:
                 return {Abv(Oh::SG001, -0.1313769127326952e-2),
                         Abv(Oh::SG0AA, -0.2522728704859336e-2),
                         Abv(Oh::SGAAA, 0.4186853881700583e-2),
@@ -208,7 +208,7 @@ namespace Lebedev {
                         Abv(Oh::SGAB0, 0.8506508083520399, 0.4229582700647240e-2),
                         Abv(Oh::SGABC, 0.3233484542692899, 0.1153112011009701, 0.4080914225780505e-2),
                         Abv(Oh::SGABC, 0.2314790158712601, 0.5244939240922365, 0.4071467593830964e-2)};
-            case RuleOrder::LD0302:
+            case Order::LD0302:
                 return {Abv(Oh::SG001, 0.8545911725128148e-3),
                         Abv(Oh::SGAAA, 0.3599119285025571e-2),
                         Abv(Oh::SGAAB, 0.3515640345570105, 0.3449788424305883e-2),
@@ -221,7 +221,7 @@ namespace Lebedev {
                         Abv(Oh::SGAB0, 0.5718955891878961, 0.3600820932216460e-2),
                         Abv(Oh::SGABC, 0.2510034751770465, 0.8000727494073952, 0.3571540554273387e-2),
                         Abv(Oh::SGABC, 0.1233548532583327, 0.4127724083168531, 0.3392312205006170e-2)};
-            case RuleOrder::LD0350:
+            case Order::LD0350:
                 return {Abv(Oh::SG001, 0.3006796749453936e-2),
                         Abv(Oh::SGAAA, 0.3050627745650771e-2),
                         Abv(Oh::SGAAB, 0.7068965463912316, 0.1621104600288991e-2),
@@ -235,7 +235,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.2899558825499574, 0.7934537856582316, 0.2958357626535696e-2),
                         Abv(Oh::SGABC, 0.9684121455103957e-1, 0.8280801506686862, 0.3036020026407088e-2),
                         Abv(Oh::SGABC, 0.1833434647041659, 0.9074658265305127, 0.2832187403926303e-2)};
-            case RuleOrder::LD0434:
+            case Order::LD0434:
                 return {Abv(Oh::SG001, 0.5265897968224436e-3),
                         Abv(Oh::SG0AA, 0.2548219972002607e-2),
                         Abv(Oh::SGAAA, 0.2512317418927307e-2),
@@ -252,7 +252,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.5905157048925271, 0.7999278543857286, 0.2512236854563495e-2),
                         Abv(Oh::SGABC, 0.5550152361076807, 0.7717462626915901, 0.2496644054553086e-2),
                         Abv(Oh::SGABC, 0.9371809858553722, 0.3344363145343455, 0.2236607760437849e-2)};
-            case RuleOrder::LD0590:
+            case Order::LD0590:
                 return {Abv(Oh::SG001, 0.3095121295306187e-3),
                         Abv(Oh::SGAAA, 0.1852379698597489e-2),
                         Abv(Oh::SGAAB, 0.7040954938227469, 0.1871790639277744e-2),
@@ -273,7 +273,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.3791035407695563, 0.1720795225656878, 0.1713904507106709e-2),
                         Abv(Oh::SGABC, 0.2778673190586244, 0.8213021581932511e-1, 0.1555213603396808e-2),
                         Abv(Oh::SGABC, 0.5033564271075117, 0.8999205842074875e-1, 0.1802239128008525e-2)};
-            case RuleOrder::LD0770:
+            case Order::LD0770:
                 return {Abv(Oh::SG001, 0.2192942088181184e-3),
                         Abv(Oh::SG0AA, 0.1436433617319080e-2),
                         Abv(Oh::SGAAA, 0.1421940344335877e-2),
@@ -299,7 +299,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.7714815866765732e-1, 0.4346575516141163, 0.1338366684479554e-2),
                         Abv(Oh::SGABC, 0.3062936666210730, 0.4908826589037616, 0.1393700862676131e-2),
                         Abv(Oh::SGABC, 0.3822477379524787, 0.5648768149099500, 0.1415914757466932e-2)};
-            case RuleOrder::LD0974:
+            case Order::LD0974:
                 return {Abv(Oh::SG001, 0.1438294190527431e-3),
                         Abv(Oh::SGAAA, 0.1125772288287004e-2),
                         Abv(Oh::SGAAB, 0.4292963545341347e-1, 0.4948029341949241e-3),
@@ -330,7 +330,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.1979578938917407, 0.3589606329589096, 0.1032401847117460e-2),
                         Abv(Oh::SGABC, 0.2087307061103274, 0.5348666438135476, 0.1107249382283854e-2),
                         Abv(Oh::SGABC, 0.4055122137872836, 0.5674997546074373, 0.1121780048519972e-2)};
-            case RuleOrder::LD1202:
+            case Order::LD1202:
                 return {Abv(Oh::SG001, 0.1105189233267572e-3),
                         Abv(Oh::SG0AA, 0.9205232738090741e-3),
                         Abv(Oh::SGAAA, 0.9133159786443561e-3),
@@ -367,7 +367,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.7553584143533510, 0.6269805509024392, 0.9131578003189435e-3),
                         Abv(Oh::SGABC, 0.7344305757559503, 0.6031161693096310, 0.9107813579482705e-3),
                         Abv(Oh::SGABC, 0.7043837184021765, 0.5693702498468441, 0.9105760258970126e-3)};
-            case RuleOrder::LD1454:
+            case Order::LD1454:
                 return {Abv(Oh::SG001, 0.7777160743261247e-4),
                         Abv(Oh::SGAAA, 0.7557646413004701e-3),
                         Abv(Oh::SGAAB, 0.3229290663413854e-1, 0.2841633806090617e-3),
@@ -410,7 +410,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.4438729938312456, 0.5611522095882537e-1, 0.7110120527658118e-3),
                         Abv(Oh::SGABC, 0.6419978471082389, 0.1164174423140873, 0.7571363978689501e-3),
                         Abv(Oh::SGABC, 0.5817218061802611, 0.5797589531445219e-1, 0.7489908329079234e-3)};
-            case RuleOrder::LD1730:
+            case Order::LD1730:
                 return {Abv(Oh::SG001, 0.6309049437420976e-4),
                         Abv(Oh::SG0AA, 0.6398287705571748e-3),
                         Abv(Oh::SGAAA, 0.6357185073530720e-3),
@@ -460,7 +460,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.5893317955931995, 0.1061059730982005, 0.6308414671239979e-3),
                         Abv(Oh::SGABC, 0.6426246321215801, 0.1594171564034221, 0.6362706466959498e-3),
                         Abv(Oh::SGABC, 0.6511904367376113, 0.5354789536565540e-1, 0.6375414170333233e-3)};
-            case RuleOrder::LD2030:
+            case Order::LD2030:
                 return {Abv(Oh::SG001, 0.4656031899197431e-4),
                         Abv(Oh::SGAAA, 0.5421549195295507e-3),
                         Abv(Oh::SGAAB, 0.2540835336814348e-1, 0.1778522133346553e-3),
@@ -517,7 +517,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6421314033564943, 0.1953579449803574, 0.5421859504051886e-3),
                         Abv(Oh::SGABC, 0.6020628374713980, 0.4916375015738108e-1, 0.5390948355046314e-3),
                         Abv(Oh::SGABC, 0.6529222529856881, 0.9861621540127005e-1, 0.5433312705027845e-3)};
-            case RuleOrder::LD2354:
+            case Order::LD2354:
                 return {Abv(Oh::SG001, 0.3922616270665292e-4),
                         Abv(Oh::SG0AA, 0.4703831750854424e-3),
                         Abv(Oh::SGAAA, 0.4678202801282136e-3),
@@ -582,7 +582,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6074705984161695, 0.9117488031840314e-1, 0.4654916955152048e-3),
                         Abv(Oh::SGABC, 0.6532272537379033, 0.1369294213140155, 0.4684709779505137e-3),
                         Abv(Oh::SGABC, 0.6594761494500487, 0.4589901487275583e-1, 0.4691445539106986e-3)};
-            case RuleOrder::LD2702:
+            case Order::LD2702:
                 return {Abv(Oh::SG001, 0.2998675149888161e-4),
                         Abv(Oh::SGAAA, 0.4077860529495355e-3),
                         Abv(Oh::SGAAB, 0.2065562538818703e-1, 0.1185349192520667e-3),
@@ -655,7 +655,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6526430302051563, 0.1698173239076354, 0.4080565809484880e-3),
                         Abv(Oh::SGABC, 0.6167551880377548, 0.4266398851548864e-1, 0.4063018753664651e-3),
                         Abv(Oh::SGABC, 0.6607195418355383, 0.8551925814238349e-1, 0.4087191292799671e-3)};
-            case RuleOrder::LD3074:
+            case Order::LD3074:
                 return {Abv(Oh::SG001, 0.2599095953754734e-4),
                         Abv(Oh::SG0AA, 0.3603134089687541e-3),
                         Abv(Oh::SGAAA, 0.3586067974412447e-3),
@@ -737,7 +737,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6207904288086192, 0.7990157592981152e-1, 0.3574296911573953e-3),
                         Abv(Oh::SGABC, 0.6608688171046802, 0.1199671308754309, 0.3591993279818963e-3),
                         Abv(Oh::SGABC, 0.6656263089489130, 0.4015955957805969e-1, 0.3595855034661997e-3)};
-            case RuleOrder::LD3470:
+            case Order::LD3470:
                 return {Abv(Oh::SG001, 0.2040382730826330e-4),
                         Abv(Oh::SGAAA, 0.3178149703889544e-3),
                         Abv(Oh::SGAAB, 0.1721420832906233e-1, 0.8288115128076110e-4),
@@ -828,7 +828,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6602934551848843, 0.1501303813157619, 0.3181401865570968e-3),
                         Abv(Oh::SGABC, 0.6278573968375105, 0.3767559930245720e-1, 0.3170663659156037e-3),
                         Abv(Oh::SGABC, 0.6665611711264577, 0.7548443301360158e-1, 0.3185447944625510e-3)};
-            case RuleOrder::LD3890:
+            case Order::LD3890:
                 return {Abv(Oh::SG001, 0.1807395252196920e-4),
                         Abv(Oh::SG0AA, 0.2848008782238827e-3),
                         Abv(Oh::SGAAA, 0.2836065837530581e-3),
@@ -929,7 +929,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6309812253390175, 0.7109574040369549e-1, 0.2829930809742694e-3),
                         Abv(Oh::SGABC, 0.6666296011353230, 0.1067259792282730, 0.2841097874111479e-3),
                         Abv(Oh::SGABC, 0.6703715271049922, 0.3569455268820809e-1, 0.2843455206008783e-3)};
-            case RuleOrder::LD4334:
+            case Order::LD4334:
                 return {Abv(Oh::SG001, 0.1449063022537883e-4),
                         Abv(Oh::SGAAA, 0.2546377329828424e-3),
                         Abv(Oh::SGAAB, 0.1462896151831013e-1, 0.6018432961087496e-4),
@@ -1040,7 +1040,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6660960998103972, 0.1345050343171794, 0.2549524085027472e-3),
                         Abv(Oh::SGABC, 0.6365384364585819, 0.3372799460737052e-1, 0.2542569507009158e-3),
                         Abv(Oh::SGABC, 0.6710994302899275, 0.6755249309678028e-1, 0.2552114127580376e-3)};
-            case RuleOrder::LD4802:
+            case Order::LD4802:
                 return {Abv(Oh::SG001, 0.9687521879420705e-4),
                         Abv(Oh::SG0AA, 0.2307897895367918e-3),
                         Abv(Oh::SGAAA, 0.2297310852498558e-3),
@@ -1162,7 +1162,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6390163550880400, 0.6402824353962306e-1, 0.2295720444840727e-3),
                         Abv(Oh::SGABC, 0.6711199107088448, 0.9609805077002909e-1, 0.2303227649026753e-3),
                         Abv(Oh::SGABC, 0.6741354429572275, 0.3211853196273233e-1, 0.2304831913227114e-3)};
-            case RuleOrder::LD5294:
+            case Order::LD5294:
                 return {Abv(Oh::SG001, 0.9080510764308163e-4),
                         Abv(Oh::SGAAA, 0.2084824361987793e-3),
                         Abv(Oh::SGAAB, 0.2303261686261450e-1, 0.5011105657239616e-4),
@@ -1295,7 +1295,7 @@ namespace Lebedev {
                         Abv(Oh::SGABC, 0.6706397927793709, 0.1218024155966590, 0.2088705858819358e-3),
                         Abv(Oh::SGABC, 0.6435019674426665, 0.3052608357660639e-1, 0.2083995867536322e-3),
                         Abv(Oh::SGABC, 0.6747218676375681, 0.6112185773983089e-1, 0.2090509712889637e-3)};
-            case RuleOrder::LD5810:
+            case Order::LD5810:
                 return {Abv(Oh::SG001, 0.9735347946175486e-5),
                         Abv(Oh::SG0AA, 0.1907581241803167e-3),
                         Abv(Oh::SGAAA, 0.1901059546737578e-3),
