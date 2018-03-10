@@ -1599,7 +1599,7 @@ namespace Lebedev {
     };
 
     Eigen::MatrixX4d getGrid(RuleOrder order){
-        Eigen::MatrixX4d xyzw(int(order),4);
+        Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
 
         auto abvs = getSymmetryGroupChain(order);
 
