@@ -3,11 +3,11 @@
 //
 
 #include <iostream>
-#include "SphericalIntegration.h"
+#include "SphericalIntegrator.h"
 
 int main() {
-    Lebedev::SphericalIntegration sphericalIntegrator;
-    
+    Lebedev::SphericalIntegrator sphericalIntegrator;
+
     auto arr = sphericalIntegrator.getGrid(Lebedev::RuleOrder::LD0014);
 
     std::cout << arr << std::endl;

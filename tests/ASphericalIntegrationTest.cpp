@@ -4,12 +4,12 @@
 
 #include <gtest/gtest.h>
 #include <Eigen/Core>
-#include "SphericalIntegration.h"
+#include "SphericalIntegrator.h"
 #include "sphere_lebedev_rule.h"
 
 class ASphericalIntegrationTest : public ::testing::Test {
 public:
-    Lebedev::SphericalIntegration sphericalIntegrator;
+    Lebedev::SphericalIntegrator sphericalIntegrator;
     void SetUp() override {}
 };
 

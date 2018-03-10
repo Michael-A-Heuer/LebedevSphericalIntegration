@@ -37,11 +37,11 @@ include_directories(
         )
 
 set(HEADER_FILES
-        include/SphericalIntegration.h
+        include/SphericalIntegrator.h
         )
 
 set(SOURCE_FILES
-        source/SphericalIntegration.cpp
+        source/SphericalIntegrator.cpp
         )
 
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES} ${HEADER_FILES})

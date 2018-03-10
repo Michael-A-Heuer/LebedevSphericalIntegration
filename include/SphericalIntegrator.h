@@ -2,8 +2,8 @@
 // Created by Michael Heuer on 10.03.18.
 //
 
-#ifndef SPHERICALINTEGRATION_H
-#define SPHERICALINTEGRATION_H
+#ifndef SPHERICALINTEGRATOR_H
+#define SPHERICALINTEGRATOR_H
 
 #include <Eigen/Core>
 #include <vector>
@@ -101,9 +101,9 @@ namespace Lebedev {
         double a_,b_,v_;
     };
 
-    class SphericalIntegration{
+    class SphericalIntegrator{
     public:
-        SphericalIntegration() = default;
+        SphericalIntegrator() = default;
 
         Eigen::MatrixX4d getGrid(RuleOrder order){
             Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
@@ -1629,4 +1629,4 @@ namespace Lebedev {
 
 };
 
-#endif //SPHERICALINTEGRATION_H
+#endif //SPHERICALINTEGRATOR_H
