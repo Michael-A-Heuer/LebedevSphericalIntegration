@@ -47,11 +47,12 @@ namespace Lebedev {
     };
 
     const std::array<RuleOrder,static_cast<unsigned>(RuleOrder::NumberOfRules)> allRules = {
-            RuleOrder::LD0006,RuleOrder::LD0014,RuleOrder::LD0026,RuleOrder::LD0038,RuleOrder::LD0050,RuleOrder::LD0074,
-            RuleOrder::LD0086,RuleOrder::LD0110,RuleOrder::LD0146,RuleOrder::LD0170,RuleOrder::LD0194,RuleOrder::LD0230,
-            RuleOrder::LD0266,RuleOrder::LD0302,RuleOrder::LD0350,RuleOrder::LD0434,RuleOrder::LD0590,RuleOrder::LD0770,
-            RuleOrder::LD0974,RuleOrder::LD1202,RuleOrder::LD1454,RuleOrder::LD1730,RuleOrder::LD2030,RuleOrder::LD2354,
-            RuleOrder::LD2702,RuleOrder::LD3074,RuleOrder::LD3470,RuleOrder::LD3890,RuleOrder::LD4334,RuleOrder::LD4802,
+            RuleOrder::LD0006,RuleOrder::LD0014,RuleOrder::LD0026,RuleOrder::LD0038,RuleOrder::LD0050,
+            RuleOrder::LD0074,RuleOrder::LD0086,RuleOrder::LD0110,RuleOrder::LD0146,RuleOrder::LD0170,
+            RuleOrder::LD0194,RuleOrder::LD0230,RuleOrder::LD0266,RuleOrder::LD0302,RuleOrder::LD0350,
+            RuleOrder::LD0434,RuleOrder::LD0590,RuleOrder::LD0770,RuleOrder::LD0974,RuleOrder::LD1202,
+            RuleOrder::LD1454,RuleOrder::LD1730,RuleOrder::LD2030,RuleOrder::LD2354,RuleOrder::LD2702,
+            RuleOrder::LD3074,RuleOrder::LD3470,RuleOrder::LD3890,RuleOrder::LD4334,RuleOrder::LD4802,
             RuleOrder::LD5294,RuleOrder::LD5810
     };
 
