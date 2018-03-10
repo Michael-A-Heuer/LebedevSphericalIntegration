@@ -9,6 +9,7 @@
 
 class ASphericalIntegrationTest : public ::testing::Test {
 public:
+    Lebedev::SphericalIntegration sphericalIntegrator;
     void SetUp() override {}
 };
 
@@ -17,7 +18,7 @@ TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheck) {
 
     for (const auto & rule : Lebedev::allRules) {
         auto order = static_cast<unsigned>(rule);
-        auto calculated = Lebedev::getGrid(rule);
+        auto calculated = sphericalIntegrator.getGrid(rule);
 
         Eigen::MatrixX4d reference(order, 4);
 
@@ -43,7 +44,7 @@ TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheckElementWise) {
     // check all rules
     for (const auto & rule : Lebedev::allRules) {
         auto order = static_cast<unsigned>(rule);
-        auto calculated = Lebedev::getGrid(rule);
+        auto calculated = sphericalIntegrator.getGrid(rule);
 
         Eigen::MatrixX4d reference(order, 4);
 

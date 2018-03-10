@@ -100,7 +100,25 @@ namespace Lebedev {
         double a_,b_,v_;
     };
 
-    std::vector<Abv> getSymmetryGroupChain(RuleOrder order) {
+    class SphericalIntegration{
+    public:
+        SphericalIntegration() = default;
+
+        Eigen::MatrixX4d getGrid(RuleOrder order){
+            Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
+            auto abvs = getSymmetryGroupChain(order);
+
+            long start = 0;
+            for (const auto& abv : abvs){
+                auto pts = points(abv.symmetryGroup());
+                xyzw.block(start,0,pts,4) = generateFromOctahedralSymmetry(abv);
+                start += pts;
+            }
+            return xyzw;
+        }
+
+    private:
+        std::vector<Abv> getSymmetryGroupChain(RuleOrder order) {
         switch (order) {
             case RuleOrder::LD0006:
                 return {Abv(Oh::SG001, 0.1666666666666667)};
@@ -1426,204 +1444,188 @@ namespace Lebedev {
         }
     };
 
-    Eigen::Matrix<double,6,4> getSG001(double v){
-        double a = 1.0;
-        Eigen::Matrix<double,6,4> xyzw;
-        xyzw << \
-          a, 0.0, 0.0, v,\
-         -a, 0.0, 0.0, v,\
-        0.0,   a, 0.0, v,\
-        0.0,  -a, 0.0, v,\
-        0.0, 0.0,   a, v,\
-        0.0, 0.0,  -a, v;
-        return xyzw;
+        Eigen::Matrix<double,6,4> getSG001(double v){
+            double a = 1.0;
+            Eigen::Matrix<double,6,4> xyzw;
+            xyzw << \
+              a, 0.0, 0.0, v,\
+             -a, 0.0, 0.0, v,\
+            0.0,   a, 0.0, v,\
+            0.0,  -a, 0.0, v,\
+            0.0, 0.0,   a, v,\
+            0.0, 0.0,  -a, v;
+            return xyzw;
+        };
+
+        Eigen::Matrix<double,12,4> getSG0AA(double v){
+            double a = 1.0/std::sqrt(2.0);
+            Eigen::Matrix<double,12,4> xyzw;
+            xyzw << \
+            0.0,   a,   a, v,\
+            0.0,   a,  -a, v,\
+            0.0,  -a,   a, v,\
+            0.0,  -a,  -a, v,\
+              a, 0.0,   a, v,\
+              a, 0.0,  -a, v,\
+             -a, 0.0,   a, v,\
+             -a, 0.0,  -a, v,\
+              a,   a, 0.0, v,\
+              a,  -a, 0.0, v,\
+             -a,   a, 0.0, v,\
+             -a,  -a, 0.0, v;
+            return xyzw;
+        };
+
+        Eigen::Matrix<double,8,4> getSGAAA(double v){
+            double a = 1.0/std::sqrt(3.0);
+            Eigen::Matrix<double,8,4> xyzw;
+            xyzw << \
+              a,   a,   a, v,\
+              a,   a,  -a, v,\
+              a,  -a,   a, v,\
+              a,  -a,  -a, v,\
+             -a,   a,   a, v,\
+             -a,   a,  -a, v,\
+             -a,  -a,   a, v,\
+             -a,  -a,  -a, v;
+            return xyzw;
+        };
+
+        Eigen::Matrix<double,24,4> getSGAAB(double a ,double v){
+            double b = std::sqrt(1.0 - 2.0*a*a);
+            Eigen::Matrix<double,24,4> xyzw;
+            xyzw << \
+              a,   a,   b, v,\
+              a,   a,  -b, v,\
+              a,  -a,   b, v,\
+              a,  -a,  -b, v,\
+             -a,   a,   b, v,\
+             -a,   a,  -b, v,\
+             -a,  -a,   b, v,\
+             -a,  -a,  -b, v,\
+              a,   b,   a, v,\
+              a,  -b,   a, v,\
+              a,   b,  -a, v,\
+              a,  -b,  -a, v,\
+             -a,   b,   a, v,\
+             -a,  -b,   a, v,\
+             -a,   b,  -a, v,\
+             -a,  -b,  -a, v,\
+              b,   a,   a, v,\
+             -b,   a,   a, v,\
+              b,   a,  -a, v,\
+             -b,   a,  -a, v,\
+              b,  -a,   a, v,\
+             -b,  -a,   a, v,\
+              b,  -a,  -a, v,\
+             -b,  -a,  -a, v;
+            return xyzw;
+        };
+
+        Eigen::Matrix<double,24,4> getSGAB0(double a ,double v){
+            double b = std::sqrt(1.0 - a*a);
+            Eigen::Matrix<double,24,4> xyzw;
+            xyzw << \
+              a,   b, 0.0, v,\
+              a,  -b, 0.0, v,\
+             -a,   b, 0.0, v,\
+             -a,  -b, 0.0, v,\
+              b,   a, 0.0, v,\
+              b,  -a, 0.0, v,\
+             -b,   a, 0.0, v,\
+             -b,  -a, 0.0, v,\
+              a, 0.0,   b, v,\
+              a, 0.0,  -b, v,\
+             -a, 0.0,   b, v,\
+             -a, 0.0,  -b, v,\
+              b, 0.0,   a, v,\
+              b, 0.0,  -a, v,\
+             -b, 0.0,   a, v,\
+             -b, 0.0,  -a, v,\
+            0.0,   a,   b, v,\
+            0.0,   a,  -b, v,\
+            0.0,  -a,   b, v,\
+            0.0,  -a,  -b, v,\
+            0.0,   b,   a, v,\
+            0.0,   b,  -a, v,\
+            0.0,  -b,   a, v,\
+            0.0,  -b,  -a, v;
+            return xyzw;
+        };
+
+        Eigen::Matrix<double,48,4> getSGABC(double a, double b, double v){
+            double c = std::sqrt(1.0 - a*a - b*b);
+            Eigen::Matrix<double,48,4> xyzw;
+            xyzw << \
+              a,   b,   c, v,\
+              a,   b,  -c, v,\
+              a,  -b,   c, v,\
+              a,  -b,  -c, v,\
+             -a,   b,   c, v,\
+             -a,   b,  -c, v,\
+             -a,  -b,   c, v,\
+             -a,  -b,  -c, v,\
+              a,   c,   b, v,\
+              a,   c,  -b, v,\
+              a,  -c,   b, v,\
+              a,  -c,  -b, v,\
+             -a,   c,   b, v,\
+             -a,   c,  -b, v,\
+             -a,  -c,   b, v,\
+             -a,  -c,  -b, v,\
+              b,   a,   c, v,\
+              b,   a,  -c, v,\
+              b,  -a,   c, v,\
+              b,  -a,  -c, v,\
+             -b,   a,   c, v,\
+             -b,   a,  -c, v,\
+             -b,  -a,   c, v,\
+             -b,  -a,  -c, v,\
+              b,   c,   a, v,\
+              b,   c,  -a, v,\
+              b,  -c,   a, v,\
+              b,  -c,  -a, v,\
+             -b,   c,   a, v,\
+             -b,   c,  -a, v,\
+             -b,  -c,   a, v,\
+             -b,  -c,  -a, v,\
+              c,   a,   b, v,\
+              c,   a,  -b, v,\
+              c,  -a,   b, v,\
+              c,  -a,  -b, v,\
+             -c,   a,   b, v,\
+             -c,   a,  -b, v,\
+             -c,  -a,   b, v,\
+             -c,  -a,  -b, v,\
+              c,   b,   a, v,\
+              c,   b,  -a, v,\
+              c,  -b,   a, v,\
+              c,  -b,  -a, v,\
+             -c,   b,   a, v,\
+             -c,   b,  -a, v,\
+             -c,  -b,   a, v,\
+             -c,  -b,  -a, v;
+            return xyzw;
+        };
+
+        Eigen::MatrixX4d generateFromOctahedralSymmetry(const Abv& abv){
+            switch (abv.symmetryGroup()){
+                case Oh::SG001:
+                    return getSG001(abv.v());
+                case Oh::SG0AA:
+                    return getSG0AA(abv.v());
+                case Oh::SGAAA:
+                    return getSGAAA(abv.v());
+                case Oh::SGAAB:
+                    return getSGAAB(abv.a(),abv.v());
+                case Oh::SGAB0:
+                    return getSGAB0(abv.a(),abv.v());
+                case Oh::SGABC:
+                    return getSGABC(abv.a(),abv.b(),abv.v());
+            }
+        };
     };
 
-    Eigen::Matrix<double,12,4> getSG0AA(double v){
-        double a = 1.0/std::sqrt(2.0);
-        Eigen::Matrix<double,12,4> xyzw;
-        xyzw << \
-        0.0,   a,   a, v,\
-        0.0,   a,  -a, v,\
-        0.0,  -a,   a, v,\
-        0.0,  -a,  -a, v,\
-          a, 0.0,   a, v,\
-          a, 0.0,  -a, v,\
-         -a, 0.0,   a, v,\
-         -a, 0.0,  -a, v,\
-          a,   a, 0.0, v,\
-          a,  -a, 0.0, v,\
-         -a,   a, 0.0, v,\
-         -a,  -a, 0.0, v;
-        return xyzw;
-    };
-
-    Eigen::Matrix<double,8,4> getSGAAA(double v){
-        double a = 1.0/std::sqrt(3.0);
-        Eigen::Matrix<double,8,4> xyzw;
-        xyzw << \
-          a,   a,   a, v,\
-          a,   a,  -a, v,\
-          a,  -a,   a, v,\
-          a,  -a,  -a, v,\
-         -a,   a,   a, v,\
-         -a,   a,  -a, v,\
-         -a,  -a,   a, v,\
-         -a,  -a,  -a, v;
-        return xyzw;
-    };
-
-    Eigen::Matrix<double,24,4> getSGAAB(double a ,double v){
-        double b = std::sqrt(1.0 - 2.0*a*a);
-        Eigen::Matrix<double,24,4> xyzw;
-        xyzw << \
-          a,   a,   b, v,\
-          a,   a,  -b, v,\
-          a,  -a,   b, v,\
-          a,  -a,  -b, v,\
-         -a,   a,   b, v,\
-         -a,   a,  -b, v,\
-         -a,  -a,   b, v,\
-         -a,  -a,  -b, v,\
-          a,   b,   a, v,\
-          a,  -b,   a, v,\
-          a,   b,  -a, v,\
-          a,  -b,  -a, v,\
-         -a,   b,   a, v,\
-         -a,  -b,   a, v,\
-         -a,   b,  -a, v,\
-         -a,  -b,  -a, v,\
-          b,   a,   a, v,\
-         -b,   a,   a, v,\
-          b,   a,  -a, v,\
-         -b,   a,  -a, v,\
-          b,  -a,   a, v,\
-         -b,  -a,   a, v,\
-          b,  -a,  -a, v,\
-         -b,  -a,  -a, v;
-        return xyzw;
-    };
-
-    Eigen::Matrix<double,24,4> getSGAB0(double a ,double v){
-        double b = std::sqrt(1.0 - a*a);
-        Eigen::Matrix<double,24,4> xyzw;
-        xyzw << \
-          a,   b, 0.0, v,\
-          a,  -b, 0.0, v,\
-         -a,   b, 0.0, v,\
-         -a,  -b, 0.0, v,\
-          b,   a, 0.0, v,\
-          b,  -a, 0.0, v,\
-         -b,   a, 0.0, v,\
-         -b,  -a, 0.0, v,\
-          a, 0.0,   b, v,\
-          a, 0.0,  -b, v,\
-         -a, 0.0,   b, v,\
-         -a, 0.0,  -b, v,\
-          b, 0.0,   a, v,\
-          b, 0.0,  -a, v,\
-         -b, 0.0,   a, v,\
-         -b, 0.0,  -a, v,\
-        0.0,   a,   b, v,\
-        0.0,   a,  -b, v,\
-        0.0,  -a,   b, v,\
-        0.0,  -a,  -b, v,\
-        0.0,   b,   a, v,\
-        0.0,   b,  -a, v,\
-        0.0,  -b,   a, v,\
-        0.0,  -b,  -a, v;
-        return xyzw;
-    };
-
-    Eigen::Matrix<double,48,4> getSGABC(double a, double b, double v){
-        double c = std::sqrt(1.0 - a*a - b*b);
-        Eigen::Matrix<double,48,4> xyzw;
-        xyzw << \
-          a,   b,   c, v,\
-          a,   b,  -c, v,\
-          a,  -b,   c, v,\
-          a,  -b,  -c, v,\
-         -a,   b,   c, v,\
-         -a,   b,  -c, v,\
-         -a,  -b,   c, v,\
-         -a,  -b,  -c, v,\
-          a,   c,   b, v,\
-          a,   c,  -b, v,\
-          a,  -c,   b, v,\
-          a,  -c,  -b, v,\
-         -a,   c,   b, v,\
-         -a,   c,  -b, v,\
-         -a,  -c,   b, v,\
-         -a,  -c,  -b, v,\
-          b,   a,   c, v,\
-          b,   a,  -c, v,\
-          b,  -a,   c, v,\
-          b,  -a,  -c, v,\
-         -b,   a,   c, v,\
-         -b,   a,  -c, v,\
-         -b,  -a,   c, v,\
-         -b,  -a,  -c, v,\
-          b,   c,   a, v,\
-          b,   c,  -a, v,\
-          b,  -c,   a, v,\
-          b,  -c,  -a, v,\
-         -b,   c,   a, v,\
-         -b,   c,  -a, v,\
-         -b,  -c,   a, v,\
-         -b,  -c,  -a, v,\
-          c,   a,   b, v,\
-          c,   a,  -b, v,\
-          c,  -a,   b, v,\
-          c,  -a,  -b, v,\
-         -c,   a,   b, v,\
-         -c,   a,  -b, v,\
-         -c,  -a,   b, v,\
-         -c,  -a,  -b, v,\
-          c,   b,   a, v,\
-          c,   b,  -a, v,\
-          c,  -b,   a, v,\
-          c,  -b,  -a, v,\
-         -c,   b,   a, v,\
-         -c,   b,  -a, v,\
-         -c,  -b,   a, v,\
-         -c,  -b,  -a, v;
-        return xyzw;
-    };
-
-    Eigen::MatrixX4d generateFromOctahedralSymmetry(const Abv& abv){
-        switch (abv.symmetryGroup()){
-            case Oh::SG001:
-                return getSG001(abv.v());
-            case Oh::SG0AA:
-                return getSG0AA(abv.v());
-            case Oh::SGAAA:
-                return getSGAAA(abv.v());
-            case Oh::SGAAB:
-                return getSGAAB(abv.a(),abv.v());
-            case Oh::SGAB0:
-                return getSGAB0(abv.a(),abv.v());
-            case Oh::SGABC:
-                return getSGABC(abv.a(),abv.b(),abv.v());
-        }
-    };
-
-    Eigen::MatrixX4d getGrid(RuleOrder order){
-        Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
-
-        auto abvs = getSymmetryGroupChain(order);
-
-        long start = 0;
-        for (const auto& abv : abvs){
-            auto pts = points(abv.symmetryGroup());
-            xyzw.block(start,0,pts,4) = generateFromOctahedralSymmetry(abv);
-            start += pts;
-        }
-        return xyzw;
-    }
-}
-class SphericalIntegration{
-public:
-    SphericalIntegration();
 };
 
 #endif //SPHERICALINTEGRATION_H
