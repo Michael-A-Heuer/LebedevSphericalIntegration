@@ -18,7 +18,7 @@ TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheck) {
 
     for (const auto & rule : Lebedev::allOrders) {
         auto order = static_cast<unsigned>(rule);
-        auto calculated = sphericalIntegrator.getGrid(rule);
+        auto calculated = sphericalIntegrator.createGrid(rule);
 
         Eigen::MatrixX4d reference(order, 4);
 
@@ -44,7 +44,7 @@ TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheckElementWise) {
     // check all rules
     for (const auto & rule : Lebedev::allOrders) {
         auto order = static_cast<unsigned>(rule);
-        auto calculated = sphericalIntegrator.getGrid(rule);
+        auto calculated = sphericalIntegrator.createGrid(rule);
 
         Eigen::MatrixX4d reference(order, 4);
 
