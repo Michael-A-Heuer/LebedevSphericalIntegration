@@ -3,7 +3,12 @@
 //
 
 #include <iostream>
+#include "SphericalIntegration.h"
 
 int main() {
+    auto arr = Lebedev::getGrid(Lebedev::RuleOrder::LD0014);
+
+    std::cout << arr << std::endl;
+
     return 0;
 }
