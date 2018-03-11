@@ -65,3 +65,6 @@ TEST_F(AGridCreatorTest, JBurkardtReferenceCheckElementWise) {
     }
 }
 
+TEST_F(AGridCreatorTest, CorrectTotalNumberOfPoints) {
+
+}

@@ -8,6 +8,7 @@
 #include <Eigen/Core>
 #include <vector>
 #include <array>
+#include "SpatialFunction.h"
 
 namespace Lebedev {
     // Order of the Lebedev integration grid. The four digits indicate the total number of grid points.
@@ -1696,6 +1697,30 @@ namespace Lebedev {
             assert(static_cast<int>(xyzw.rows()) == nPts);
             return xyzw;
         };
+    };
+
+    class SphericalIntegrator{
+    public:
+        explicit SphericalIntegrator(const OrderType& orderType = OrderType::LD0006)
+                : gridCreator_(orderType){};
+
+        double integrate(SpatialFunction &f) const {
+            const auto& xyzw = gridCreator_.grid();
+            double integral = 0.0;
+
+            for (int i = 0; i < xyzw.rows(); ++i) {
+                integral += f.value(xyzw.row(i).head(3)) * xyzw.row(i)[3];
+            }
+            return 4*M_PI*integral;
+        };
+
+
+    void changeGrid(const OrderType& orderType){
+        gridCreator_.changeGrid(orderType);
+    };
+
+    private:
+        GridCreator gridCreator_;
     };
 };
 

@@ -38,6 +38,7 @@ include_directories(
 
 set(HEADER_FILES
         include/SphericalIntegration.h
+        include/SpatialFunction.h
         )
 
 set(SOURCE_FILES
