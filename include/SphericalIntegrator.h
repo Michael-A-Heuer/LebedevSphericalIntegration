@@ -107,23 +107,23 @@ namespace Lebedev {
 
     class SphericalIntegrator{
     public:
-        SphericalIntegrator() = default;
+        explicit SphericalIntegrator(const Order& order = Order::LD0006)
+                : order_(order),
+                  xyzw_(createGrid(order)){};
 
-        Eigen::MatrixX4d createGrid(Order order){
-            Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
-            auto subgridInfoVector = getSubgridCompositionInfo(order);
+        void changeGrid(const Order &order){
+            xyzw_ = createGrid(order);
+        }
 
-            long start = 0;
-            for (const auto& info : subgridInfoVector){
-                auto pts = info.numberOfPoints();
-                xyzw.block(start,0,pts,4) = createSubgrid(info);
-                start += pts;
-            }
-            return xyzw;
+        const Eigen::MatrixX4d& grid() const {
+            return xyzw_;
         };
 
     private:
-        std::vector<SubgridCompositionInfo> getSubgridCompositionInfo(Order order) {
+        Order order_;
+        Eigen::MatrixX4d xyzw_;
+
+        std::vector<SubgridCompositionInfo> getSubgridCompositionInfo(const Order& order) const {
         switch (order) {
             case Order::LD0006:
                 return {{SubgridType::SG001, 0.1666666666666667}};
@@ -1449,7 +1449,7 @@ namespace Lebedev {
         }
     };
 
-        Eigen::Matrix<double,6,4> createSubgrid001(double v){
+        Eigen::Matrix<double,6,4> createSubgrid001(double v) const {
             double a = 1.0;
             Eigen::Matrix<double,6,4> xyzw;
             xyzw << \
@@ -1462,7 +1462,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::Matrix<double,12,4> createSubgrid0AA(double v){
+        Eigen::Matrix<double,12,4> createSubgrid0AA(double v) const {
             double a = 1.0/std::sqrt(2.0);
             Eigen::Matrix<double,12,4> xyzw;
             xyzw << \
@@ -1481,7 +1481,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::Matrix<double,8,4> createSubgridAAA(double v){
+        Eigen::Matrix<double,8,4> createSubgridAAA(double v) const {
             double a = 1.0/std::sqrt(3.0);
             Eigen::Matrix<double,8,4> xyzw;
             xyzw << \
@@ -1496,7 +1496,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::Matrix<double,24,4> createSubgridAAB(double a, double v){
+        Eigen::Matrix<double,24,4> createSubgridAAB(double a, double v) const {
             double b = std::sqrt(1.0 - 2.0*a*a);
             Eigen::Matrix<double,24,4> xyzw;
             xyzw << \
@@ -1527,7 +1527,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::Matrix<double,24,4> createSubgridAB0(double a, double v){
+        Eigen::Matrix<double,24,4> createSubgridAB0(double a, double v) const {
             double b = std::sqrt(1.0 - a*a);
             Eigen::Matrix<double,24,4> xyzw;
             xyzw << \
@@ -1558,7 +1558,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::Matrix<double,48,4> createSubgridABC(double a, double b, double v){
+        Eigen::Matrix<double,48,4> createSubgridABC(double a, double b, double v) const {
             double c = std::sqrt(1.0 - a*a - b*b);
             Eigen::Matrix<double,48,4> xyzw;
             xyzw << \
@@ -1613,7 +1613,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::MatrixX4d createSubgrid(const SubgridCompositionInfo &info){
+        Eigen::MatrixX4d createSubgrid(const SubgridCompositionInfo &info) const {
             switch (info.subgridType()){
                 case SubgridType::SG001:
                     return createSubgrid001(info.v());
@@ -1628,6 +1628,19 @@ namespace Lebedev {
                 case SubgridType::SGABC:
                     return createSubgridABC(info.a(), info.b(), info.v());
             }
+        };
+
+        Eigen::MatrixX4d createGrid(Order order) const {
+            Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
+            auto subgridInfoVector = getSubgridCompositionInfo(order);
+
+            long start = 0;
+            for (const auto& info : subgridInfoVector){
+                auto pts = info.numberOfPoints();
+                xyzw.block(start,0,pts,4) = createSubgrid(info);
+                start += pts;
+            }
+            return xyzw;
         };
     };
 };

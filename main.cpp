@@ -6,11 +6,9 @@
 #include "SphericalIntegrator.h"
 
 int main() {
-    Lebedev::SphericalIntegrator sphericalIntegrator;
+    Lebedev::SphericalIntegrator sphericalIntegrator(Lebedev::Order::LD0014);
 
-    auto arr = sphericalIntegrator.createGrid(Lebedev::Order::LD0014);
-
-    std::cout << arr << std::endl;
+    std::cout << sphericalIntegrator.grid() << std::endl;
 
     return 0;
 }
