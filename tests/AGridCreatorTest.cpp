@@ -4,22 +4,22 @@
 
 #include <gtest/gtest.h>
 #include <Eigen/Core>
-#include "SphericalIntegrator.h"
+#include "SphericalIntegration.h"
 #include "sphere_lebedev_rule.h"
 
-class ASphericalIntegratorTest : public ::testing::Test {
+class AGridCreatorTest : public ::testing::Test {
 public:
-    Lebedev::SphericalIntegrator sphericalIntegrator;
+    Lebedev::GridCreator gridCreator;
     void SetUp() override {}
 };
 
-
-TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheck) {
+TEST_F(AGridCreatorTest, JBurkardtReferenceCheck) {
 
     for (const auto & order : Lebedev::allOrders) {
-        sphericalIntegrator.changeGrid(order);
-        auto nPts = sphericalIntegrator.totalNumberOfGridPoints();
-        auto calculated = sphericalIntegrator.grid();
+        
+        gridCreator.changeGrid(order);
+        auto nPts = gridCreator.totalNumberOfGridPoints();
+        auto calculated = gridCreator.grid();
 
         double x[nPts], y[nPts], z[nPts], w[nPts];
         ld_by_order(nPts, x, y, z, w);
@@ -37,13 +37,13 @@ TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheck) {
     }
 }
 
-TEST_F(ASphericalIntegrationTest, JBurkardtReferenceCheckElementWise) {
+TEST_F(AGridCreatorTest, JBurkardtReferenceCheckElementWise) {
 
-    // check all rules
     for (const auto & order : Lebedev::allOrders) {
-        sphericalIntegrator.changeGrid(order);
-        auto nPts = sphericalIntegrator.totalNumberOfGridPoints();
-        auto calculated = sphericalIntegrator.grid();
+
+        gridCreator.changeGrid(order);
+        auto nPts = gridCreator.totalNumberOfGridPoints();
+        auto calculated = gridCreator.grid();
 
         double x[nPts], y[nPts], z[nPts], w[nPts];
         ld_by_order(nPts, x, y, z, w);

@@ -3,12 +3,12 @@
 //
 
 #include <iostream>
-#include "SphericalIntegrator.h"
+#include "SphericalIntegration.h"
 
 int main() {
-    Lebedev::SphericalIntegrator sphericalIntegrator(Lebedev::Order::LD0014);
+    Lebedev::GridCreator gridCreator(Lebedev::OrderType::LD0014);
 
-    std::cout << sphericalIntegrator.grid() << std::endl;
+    std::cout << gridCreator.grid() << std::endl;
 
     return 0;
 }
