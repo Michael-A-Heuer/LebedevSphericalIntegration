@@ -68,22 +68,6 @@ namespace Lebedev {
         };
 
     // Number of points of the octahedral subgrids
-    static unsigned numberOfPoints(SubgridType sg){
-            switch (sg) {
-                case SubgridType::SG001:
-                    return 6;
-                case SubgridType::SG0AA:
-                    return 12;
-                case SubgridType::SGAAA:
-                    return 8;
-                case SubgridType::SGAAB:
-                    return 24;
-                case SubgridType::SGAB0:
-                    return 24;
-                case SubgridType::SGABC:
-                    return 48;
-            }
-        }
 
     class SubgridCompositionInfo{
     public:
@@ -99,6 +83,23 @@ namespace Lebedev {
         double b() const { return b_;};
         double v() const { return v_;};
 
+        unsigned numberOfPoints() const{
+            switch (sg_) {
+                case SubgridType::SG001:
+                    return 6;
+                case SubgridType::SG0AA:
+                    return 12;
+                case SubgridType::SGAAA:
+                    return 8;
+                case SubgridType::SGAAB:
+                    return 24;
+                case SubgridType::SGAB0:
+                    return 24;
+                case SubgridType::SGABC:
+                    return 48;
+            }
+        };
+
     private:
         SubgridType sg_;
         double a_,b_,v_;
@@ -110,12 +111,12 @@ namespace Lebedev {
 
         Eigen::MatrixX4d createGrid(Order order){
             Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
-            auto abvs = getSubgridCompositionInfo(order);
+            auto subgridInfoVector = getSubgridCompositionInfo(order);
 
             long start = 0;
-            for (const auto& abv : abvs){
-                auto pts = numberOfPoints(abv.subgridType());
-                xyzw.block(start,0,pts,4) = createSubgrid(abv);
+            for (const auto& info : subgridInfoVector){
+                auto pts = info.numberOfPoints();
+                xyzw.block(start,0,pts,4) = createSubgrid(info);
                 start += pts;
             }
             return xyzw;
