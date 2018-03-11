@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <SphericalIntegration.h>
+#include <SphericalIntegration/SphericalIntegration.h>
 #include <iomanip>
 
 class UnitSphere : public SpatialFunction{
