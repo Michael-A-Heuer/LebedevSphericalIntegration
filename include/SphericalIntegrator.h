@@ -10,40 +10,74 @@
 #include <array>
 
 namespace Lebedev {
+    // Order of the Lebedev integration grid. The four digits indicate the total number of grid points.
     enum class Order{
-        LD0006 = 6,
-        LD0014 = 14,
-        LD0026 = 26,
-        LD0038 = 38,
-        LD0050 = 50,
-        LD0074 = 74,
-        LD0086 = 86,
-        LD0110 = 110,
-        LD0146 = 146,
-        LD0170 = 170,
-        LD0194 = 194,
-        LD0230 = 230,
-        LD0266 = 266,
-        LD0302 = 302,
-        LD0350 = 350,
-        LD0434 = 434,
-        LD0590 = 590,
-        LD0770 = 770,
-        LD0974 = 974,
-        LD1202 = 1202,
-        LD1454 = 1454,
-        LD1730 = 1730,
-        LD2030 = 2030,
-        LD2354 = 2354,
-        LD2702 = 2702,
-        LD3074 = 3074,
-        LD3470 = 3470,
-        LD3890 = 3890,
-        LD4334 = 4334,
-        LD4802 = 4802,
-        LD5294 = 5294,
-        LD5810 = 5810,
-        NumberOfOrders = 32
+        LD0006 = 3,
+        LD0014 = 5,
+        LD0026 = 7,
+        LD0038 = 9,
+        LD0050 = 11,
+        LD0074 = 13,
+        LD0086 = 15,
+        LD0110 = 17,
+        LD0146 = 19,
+        LD0170 = 21,
+        LD0194 = 23,
+        LD0230 = 25,
+        LD0266 = 27,
+        LD0302 = 29,
+        LD0350 = 31,
+      //LD0386 = 33,
+        LD0434 = 35,
+      //LD0482 = 37,
+      //LD0530 = 39,
+        LD0590 = 41,
+      //LD0650 = 43,
+      //LD0698 = 45,
+        LD0770 = 47,
+      //LD0830 = 49,
+      //LD0890 = 51,
+        LD0974 = 53,
+      //LD1046 = 55,
+      //LD1118 = 57,
+        LD1202 = 59,
+      //LD1274 = 61,
+      //LD1358 = 63,
+        LD1454 = 65,
+      //LD1538 = 67,
+      //LD1622 = 69,
+        LD1730 = 71,
+      //LD1814 = 73,
+      //LD1910 = 75,
+        LD2030 = 77,
+      //LD2126 = 79,
+      //LD2222 = 81,
+        LD2354 = 83,
+      //LD2450 = 85,
+      //LD2558 = 87,
+        LD2702 = 89,
+      //LD2810 = 91,
+      //LD2930 = 93,
+        LD3074 = 95,
+      //LD3182 = 97,
+      //LD3314 = 99,
+        LD3470 = 101,
+      //LD3590 = 103,
+      //LD3722 = 105,
+        LD3890 = 107,
+      //LD4010 = 109,
+      //LD4154 = 111,
+        LD4334 = 113,
+      //LD4466 = 115,
+      //LD4610 = 117,
+        LD4802 = 119,
+      //LD4934 = 121,
+      //LD5090 = 123,
+        LD5294 = 125,
+      //LD5438 = 127,
+      //LD5606 = 129,
+        LD5810 = 131,
+        NumberOfOrders = 32 // out of 65
     };
 
     // Array of all orders to allow iteration
@@ -67,15 +101,13 @@ namespace Lebedev {
             SGABC, // etc., C=sqrt(1-A^2-B^2), A, B input
         };
 
-    // Number of points of the octahedral subgrids
-
-    class SubgridCompositionInfo{
+    class SubgridInfo{
     public:
-        SubgridCompositionInfo(const SubgridType sg, double v)
+        SubgridInfo(const SubgridType sg, double v)
                 : sg_(sg),a_(0),b_(0),v_(v) {};
-        SubgridCompositionInfo(const SubgridType sg, double a, double v)
+        SubgridInfo(const SubgridType sg, double a, double v)
                 : sg_(sg),a_(a),b_(0),v_(v) {};
-        SubgridCompositionInfo(const SubgridType sg, double a, double b, double v)
+        SubgridInfo(const SubgridType sg, double a, double b, double v)
                 : sg_(sg),a_(a),b_(b),v_(v) {};
 
         SubgridType subgridType() const { return sg_;};
@@ -112,18 +144,36 @@ namespace Lebedev {
                   xyzw_(createGrid(order)){};
 
         void changeGrid(const Order &order){
-            xyzw_ = createGrid(order);
-        }
+            if(order_ != order) {
+                order_ = order;
+                xyzw_ = createGrid(order);
+            }
+        };
 
         const Eigen::MatrixX4d& grid() const {
             return xyzw_;
+        };
+
+        unsigned totalNumberOfGridPoints() const {
+            assert(xyzw_.rows() <= 5810 && "The total number of grid points must be less than or equal to 5810.");
+            //Thus, the static_cast<unsigned>(long int) is ok.
+            return static_cast<unsigned >(xyzw_.rows());
+        };
+
+        unsigned calculateTotalNumberOfGridPoints(const Order &order) const {
+            auto subgridInfoVector = getSubgridCompositionInfo(order);
+            unsigned totalNumberOfPoints = 0;
+            for (const auto& subgridInfo : subgridInfoVector){
+                totalNumberOfPoints += subgridInfo.numberOfPoints();
+            }
+            return totalNumberOfPoints;
         };
 
     private:
         Order order_;
         Eigen::MatrixX4d xyzw_;
 
-        std::vector<SubgridCompositionInfo> getSubgridCompositionInfo(const Order& order) const {
+        std::vector<SubgridInfo> getSubgridCompositionInfo(const Order& order) const {
         switch (order) {
             case Order::LD0006:
                 return {{SubgridType::SG001, 0.1666666666666667}};
@@ -1613,7 +1663,7 @@ namespace Lebedev {
             return xyzw;
         };
 
-        Eigen::MatrixX4d createSubgrid(const SubgridCompositionInfo &info) const {
+        Eigen::MatrixX4d createSubgrid(const SubgridInfo &info) const {
             switch (info.subgridType()){
                 case SubgridType::SG001:
                     return createSubgrid001(info.v());
@@ -1631,15 +1681,19 @@ namespace Lebedev {
         };
 
         Eigen::MatrixX4d createGrid(Order order) const {
-            Eigen::MatrixX4d xyzw(static_cast<unsigned>(order),4);
+            auto nPts = calculateTotalNumberOfGridPoints(order);
+            Eigen::MatrixX4d xyzw(nPts,4);
+
             auto subgridInfoVector = getSubgridCompositionInfo(order);
 
-            long start = 0;
-            for (const auto& info : subgridInfoVector){
-                auto pts = info.numberOfPoints();
-                xyzw.block(start,0,pts,4) = createSubgrid(info);
-                start += pts;
+            unsigned startIndex = 0;
+            for (const auto& subgridInfo : subgridInfoVector){
+                auto numberOfPoints = subgridInfo.numberOfPoints();
+                xyzw.block(startIndex,0,numberOfPoints,4) = createSubgrid(subgridInfo);
+                startIndex += numberOfPoints;
             }
+
+            assert(static_cast<int>(xyzw.rows()) == nPts);
             return xyzw;
         };
     };
