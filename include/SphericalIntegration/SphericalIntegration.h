@@ -10,28 +10,20 @@
 #include <array>
 #include "SpatialFunction.h"
 #include "OrderType.h"
+#include "SubgridType.h"
 
 namespace Lebedev {
-    // Octahedral subgrid types
-    enum class SubgridType {
-            SG001, // etc.
-            SG0AA, // etc., A=1/sqrt(2)
-            SGAAA, // etc., A=1/sqrt(3)
-            SGAAB, // etc., B=sqrt(1-2 A^2)
-            SGAB0, // etc., B=sqrt(1-A^2), A input
-            SGABC, // etc., C=sqrt(1-A^2-B^2), A, B input
-        };
 
     class SubgridInfo{
     public:
-        SubgridInfo(const SubgridType sg, double v)
+        SubgridInfo(const SubgridType& sg, double v)
                 : sg_(sg),a_(0),b_(0),v_(v) {};
-        SubgridInfo(const SubgridType sg, double a, double v)
+        SubgridInfo(const SubgridType& sg, double a, double v)
                 : sg_(sg),a_(a),b_(0),v_(v) {};
-        SubgridInfo(const SubgridType sg, double a, double b, double v)
+        SubgridInfo(const SubgridType& sg, double a, double b, double v)
                 : sg_(sg),a_(a),b_(b),v_(v) {};
 
-        SubgridType subgridType() const { return sg_;};
+        const SubgridType& subgridType() const { return sg_;};
         double a() const { return a_;};
         double b() const { return b_;};
         double v() const { return v_;};
@@ -54,7 +46,7 @@ namespace Lebedev {
         };
 
     private:
-        SubgridType sg_;
+        SubgridType sg_{};
         double a_,b_,v_;
     };
 
