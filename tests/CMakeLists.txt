@@ -9,16 +9,16 @@ include_directories(
         ${gtest_SOURCE_DIR}
         )
 
-add_library(JBurkardtReference STATIC
+add_library(sphere_lebedev_rule STATIC
         sphere_lebedev_rule/sphere_lebedev_rule.h
         sphere_lebedev_rule/sphere_lebedev_rule.cpp
         )
 
-add_executable("${PROJECT_NAME}Tests" ${TEST_SOURCE_FILES})
+add_executable("${PROJECT_NAME}Tests" ${TEST_SOURCE_FILES} main.cpp)
 
 target_link_libraries("${PROJECT_NAME}Tests"
         ${PROJECT_NAME}
-        JBurkardtReference
-        gtest gtest_main
+        sphere_lebedev_rule
+        gtest
         pthread
         )

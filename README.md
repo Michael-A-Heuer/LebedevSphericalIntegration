@@ -6,3 +6,5 @@
 ## Requirements
 
 * [Eigen library](http://eigen.tuxfamily.org/index.php?title=Main_Page)
+
+## Installation
