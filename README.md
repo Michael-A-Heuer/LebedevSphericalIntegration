@@ -8,3 +8,5 @@
 * [Eigen library](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 
 ## Installation
+
+Just include the repository as a subdirectory in your CMake build or link to the `SphericalIntegration.h` file directly.
