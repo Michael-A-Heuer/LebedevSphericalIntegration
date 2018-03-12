@@ -1,6 +1,6 @@
-# C++ Spherical Integration
+# C++ Lebedev Spherical Integration
 
-#####  A C++ header-only library for performing spherical integration on the unit sphere with Lebedev quadrature.
+#####  A C++ header-only library for performing numerical integration over a surface of a sphere using Lebedev quadrature.
 
 ## Introduction
 
