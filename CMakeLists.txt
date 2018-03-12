@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(LebedevSphericalIntegration C CXX)
+project(LebedevSphericalIntegration CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
