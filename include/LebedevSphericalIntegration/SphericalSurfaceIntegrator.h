@@ -2,19 +2,16 @@
 // Created by Michael Heuer on 10.03.18.
 //
 
-#ifndef SPHERICALINTEGRATOR_H
-#define SPHERICALINTEGRATOR_H
+#ifndef SPHERICALSURFACEINTEGRATOR_H
+#define SPHERICALSURFACEINTEGRATOR_H
 
-#include <Eigen/Core>
-#include <vector>
-#include <array>
 #include "SpatialFunction.h"
 #include "GridCreator.h"
 
 namespace Lebedev {
-    class SphericalIntegrator{
+    class SphericalSurfaceIntegrator{
     public:
-        explicit SphericalIntegrator(const OrderType& orderType = OrderType::LD0006)
+        explicit SphericalSurfaceIntegrator(const OrderType& orderType = OrderType::LD0006)
                 : gridCreator_(orderType){};
 
         double integrate(SpatialFunction &f) const {
@@ -37,4 +34,4 @@ namespace Lebedev {
     };
 };
 
-#endif //SPHERICALINTEGRATOR_H
+#endif //SPHERICALSURFACEINTEGRATOR_H

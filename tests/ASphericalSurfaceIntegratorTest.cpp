@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <LebedevQuadrature/SphericalIntegrator.h>
+#include <LebedevSphericalIntegration/SphericalSurfaceIntegrator.h>
 
 class UnitSphere : public SpatialFunction{
 public:
@@ -14,13 +14,13 @@ public:
 
 using namespace Lebedev;
 
-class ASphericalIntegratorTest : public ::testing::Test {
+class ASphericalSurfaceIntegratorTest : public ::testing::Test {
 public:
-    SphericalIntegrator sphericalIntegrator;
+    SphericalSurfaceIntegrator sphericalSurfaceIntegrator;
     void SetUp() override {}
 };
 
-TEST_F(ASphericalIntegratorTest, UnitSphereVolume) {
+TEST_F(ASphericalSurfaceIntegratorTest, UnitSphereVolume) {
 
     UnitSphere f;
     //Volume of the unit sphere calculated symbolically with Mathematica
@@ -28,8 +28,8 @@ TEST_F(ASphericalIntegratorTest, UnitSphereVolume) {
 
 
     for (const auto & order : Lebedev::allOrders) {
-        sphericalIntegrator.changeGrid(order);
-        double calculated = sphericalIntegrator.integrate(f);
+        sphericalSurfaceIntegrator.changeGrid(order);
+        double calculated = sphericalSurfaceIntegrator.integrate(f);
 
         double relError = std::abs(calculated - reference) / (reference);
         ASSERT_LE(relError, 2.2052e-14);

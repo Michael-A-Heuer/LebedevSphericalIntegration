@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <Eigen/Core>
-#include "LebedevQuadrature/GridCreator.h"
+#include "LebedevSphericalIntegration/GridCreator.h"
 #include "sphere_lebedev_rule.h"
 
 class AGridCreatorTest : public ::testing::Test {
