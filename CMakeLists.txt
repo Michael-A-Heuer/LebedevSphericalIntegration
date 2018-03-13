@@ -4,7 +4,7 @@ project(LebedevSphericalIntegration CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
-if(NOT BUILD_GOOGLETEST)
+if(NOT BUILT_GOOGLETEST_ALREADY)
     # Download and unpack googletest at configure time
     configure_file(cmake/DownloadGoogleTest.in
             googletest-download/CMakeLists.txt)
