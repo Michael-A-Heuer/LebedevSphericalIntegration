@@ -20,12 +20,11 @@ public:
     void SetUp() override {}
 };
 
-TEST_F(ASphericalSurfaceIntegratorTest, UnitSphereVolume) {
+TEST_F(ASphericalSurfaceIntegratorTest, UnitSphereSurface) {
 
     UnitSphere f;
-    //Volume of the unit sphere calculated symbolically with Mathematica
-    double reference = 12.5663706143591730;
-
+    //Surface of the unit sphere
+    double reference = 4*M_PI;
 
     for (const auto & order : Lebedev::allOrders) {
         sphericalSurfaceIntegrator.changeGrid(order);
