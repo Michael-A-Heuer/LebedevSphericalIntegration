@@ -3,7 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-#include <Eigen/Core>
 #include "LebedevSphericalIntegration/GridCreator.h"
 #include "sphere_lebedev_rule.h"
 
@@ -63,8 +62,4 @@ TEST_F(AGridCreatorTest, JBurkardtReferenceCheckElementWise) {
             }
         }
     }
-}
-
-TEST_F(AGridCreatorTest, CorrectTotalNumberOfPoints) {
-
 }
