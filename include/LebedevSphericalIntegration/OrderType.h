@@ -90,7 +90,7 @@ namespace Lebedev {
             OrderType::LD5294, OrderType::LD5810
     };
 
-    OrderType findAdequateOrder(unsigned requiredPolynomialOrder){
+    static OrderType findAdequateRule(unsigned requiredPolynomialOrder){
         for (const auto & order : allOrders){
             if(static_cast<unsigned>(order) >= requiredPolynomialOrder)
                 return order;
