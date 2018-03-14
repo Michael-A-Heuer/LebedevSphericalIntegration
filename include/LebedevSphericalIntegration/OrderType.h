@@ -75,7 +75,8 @@ namespace Lebedev {
         //LD5438 = 127,
         //LD5606 = 129,
         LD5810 = 131,
-        NumberOfOrders = 32 // out of 65
+        NumberOfOrders = 32, // out of 65
+        NotAvailable = 0
     };
 
     // Array of all orderTypes to allow iteration
@@ -87,6 +88,14 @@ namespace Lebedev {
             OrderType::LD1454, OrderType::LD1730, OrderType::LD2030, OrderType::LD2354, OrderType::LD2702,
             OrderType::LD3074, OrderType::LD3470, OrderType::LD3890, OrderType::LD4334, OrderType::LD4802,
             OrderType::LD5294, OrderType::LD5810
+    };
+
+    OrderType findAdequateOrder(unsigned requiredPolynomialOrder){
+        for (const auto & order : allOrders){
+            if(static_cast<unsigned>(order) >= requiredPolynomialOrder)
+                return order;
+        }
+        return OrderType::NotAvailable;
     };
 }
 
