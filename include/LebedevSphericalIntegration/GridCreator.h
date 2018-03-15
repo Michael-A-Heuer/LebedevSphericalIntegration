@@ -1379,10 +1379,10 @@ namespace Lebedev {
             xyzw << \
               a, 0.0, 0.0, v, \
              -a, 0.0, 0.0, v, \
-            0.0, a, 0.0, v, \
-            0.0, -a, 0.0, v, \
-            0.0, 0.0, a, v, \
-            0.0, 0.0, -a, v;
+            0.0,   a, 0.0, v, \
+            0.0,  -a, 0.0, v, \
+            0.0, 0.0,   a, v, \
+            0.0, 0.0,  -a, v;
             return xyzw;
         };
 
@@ -1390,18 +1390,18 @@ namespace Lebedev {
             double a = 1.0 / std::sqrt(2.0);
             Eigen::Matrix<double, 12, 4> xyzw;
             xyzw << \
-            0.0, a, a, v, \
-            0.0, a, -a, v, \
-            0.0, -a, a, v, \
-            0.0, -a, -a, v, \
-              a, 0.0, a, v, \
-              a, 0.0, -a, v, \
-             -a, 0.0, a, v, \
-             -a, 0.0, -a, v, \
-              a, a, 0.0, v, \
-              a, -a, 0.0, v, \
-             -a, a, 0.0, v, \
-             -a, -a, 0.0, v;
+            0.0,   a,   a, v, \
+            0.0,   a,  -a, v, \
+            0.0,  -a,   a, v, \
+            0.0,  -a,  -a, v, \
+              a, 0.0,   a, v, \
+              a, 0.0,  -a, v, \
+             -a, 0.0,   a, v, \
+             -a, 0.0,  -a, v, \
+              a,   a, 0.0, v, \
+              a,  -a, 0.0, v, \
+             -a,   a, 0.0, v, \
+             -a,  -a, 0.0, v;
             return xyzw;
         };
 
@@ -1409,14 +1409,14 @@ namespace Lebedev {
             double a = 1.0 / std::sqrt(3.0);
             Eigen::Matrix<double, 8, 4> xyzw;
             xyzw << \
-              a, a, a, v, \
-              a, a, -a, v, \
-              a, -a, a, v, \
-              a, -a, -a, v, \
-             -a, a, a, v, \
-             -a, a, -a, v, \
-             -a, -a, a, v, \
-             -a, -a, -a, v;
+              a,   a,   a, v, \
+              a,   a,  -a, v, \
+              a,  -a,   a, v, \
+              a,  -a,  -a, v, \
+             -a,   a,   a, v, \
+             -a,   a,  -a, v, \
+             -a,  -a,   a, v, \
+             -a,  -a,  -a, v;
             return xyzw;
         };
 
@@ -1424,30 +1424,30 @@ namespace Lebedev {
             double b = std::sqrt(1.0 - 2.0 * a * a);
             Eigen::Matrix<double, 24, 4> xyzw;
             xyzw << \
-              a, a, b, v, \
-              a, a, -b, v, \
-              a, -a, b, v, \
-              a, -a, -b, v, \
-             -a, a, b, v, \
-             -a, a, -b, v, \
-             -a, -a, b, v, \
-             -a, -a, -b, v, \
-              a, b, a, v, \
-              a, -b, a, v, \
-              a, b, -a, v, \
-              a, -b, -a, v, \
-             -a, b, a, v, \
-             -a, -b, a, v, \
-             -a, b, -a, v, \
-             -a, -b, -a, v, \
-              b, a, a, v, \
-             -b, a, a, v, \
-              b, a, -a, v, \
-             -b, a, -a, v, \
-              b, -a, a, v, \
-             -b, -a, a, v, \
-              b, -a, -a, v, \
-             -b, -a, -a, v;
+              a,   a,   b, v, \
+              a,   a,  -b, v, \
+              a,  -a,   b, v, \
+              a,  -a,  -b, v, \
+             -a,   a,   b, v, \
+             -a,   a,  -b, v, \
+             -a,  -a,   b, v, \
+             -a,  -a,  -b, v, \
+              a,   b,   a, v, \
+              a,  -b,   a, v, \
+              a,   b,  -a, v, \
+              a,  -b,  -a, v, \
+             -a,   b,   a, v, \
+             -a,  -b,   a, v, \
+             -a,   b,  -a, v, \
+             -a,  -b,  -a, v, \
+              b,   a,   a, v, \
+             -b,   a,   a, v, \
+              b,   a,  -a, v, \
+             -b,   a,  -a, v, \
+              b,  -a,   a, v, \
+             -b,  -a,   a, v, \
+              b,  -a,  -a, v, \
+             -b,  -a,  -a, v;
             return xyzw;
         };
 
@@ -1455,30 +1455,30 @@ namespace Lebedev {
             double b = std::sqrt(1.0 - a * a);
             Eigen::Matrix<double, 24, 4> xyzw;
             xyzw << \
-              a, b, 0.0, v, \
-              a, -b, 0.0, v, \
-             -a, b, 0.0, v, \
-             -a, -b, 0.0, v, \
-              b, a, 0.0, v, \
-              b, -a, 0.0, v, \
-             -b, a, 0.0, v, \
-             -b, -a, 0.0, v, \
-              a, 0.0, b, v, \
-              a, 0.0, -b, v, \
-             -a, 0.0, b, v, \
-             -a, 0.0, -b, v, \
-              b, 0.0, a, v, \
-              b, 0.0, -a, v, \
-             -b, 0.0, a, v, \
-             -b, 0.0, -a, v, \
-            0.0, a, b, v, \
-            0.0, a, -b, v, \
-            0.0, -a, b, v, \
-            0.0, -a, -b, v, \
-            0.0, b, a, v, \
-            0.0, b, -a, v, \
-            0.0, -b, a, v, \
-            0.0, -b, -a, v;
+              a,   b, 0.0, v, \
+              a,  -b, 0.0, v, \
+             -a,   b, 0.0, v, \
+             -a,  -b, 0.0, v, \
+              b,   a, 0.0, v, \
+              b,  -a, 0.0, v, \
+             -b,   a, 0.0, v, \
+             -b,  -a, 0.0, v, \
+              a, 0.0,   b, v, \
+              a, 0.0,  -b, v, \
+             -a, 0.0,   b, v, \
+             -a, 0.0,  -b, v, \
+              b, 0.0,   a, v, \
+              b, 0.0,  -a, v, \
+             -b, 0.0,   a, v, \
+             -b, 0.0,  -a, v, \
+            0.0,   a,   b, v, \
+            0.0,   a,  -b, v, \
+            0.0,  -a,   b, v, \
+            0.0,  -a,  -b, v, \
+            0.0,   b,   a, v, \
+            0.0,   b,  -a, v, \
+            0.0,  -b,   a, v, \
+            0.0,  -b,  -a, v;
             return xyzw;
         };
 
@@ -1486,54 +1486,54 @@ namespace Lebedev {
             double c = std::sqrt(1.0 - a * a - b * b);
             Eigen::Matrix<double, 48, 4> xyzw;
             xyzw << \
-              a, b, c, v, \
-              a, b, -c, v, \
-              a, -b, c, v, \
-              a, -b, -c, v, \
-             -a, b, c, v, \
-             -a, b, -c, v, \
-             -a, -b, c, v, \
-             -a, -b, -c, v, \
-              a, c, b, v, \
-              a, c, -b, v, \
-              a, -c, b, v, \
-              a, -c, -b, v, \
-             -a, c, b, v, \
-             -a, c, -b, v, \
-             -a, -c, b, v, \
-             -a, -c, -b, v, \
-              b, a, c, v, \
-              b, a, -c, v, \
-              b, -a, c, v, \
-              b, -a, -c, v, \
-             -b, a, c, v, \
-             -b, a, -c, v, \
-             -b, -a, c, v, \
-             -b, -a, -c, v, \
-              b, c, a, v, \
-              b, c, -a, v, \
-              b, -c, a, v, \
-              b, -c, -a, v, \
-             -b, c, a, v, \
-             -b, c, -a, v, \
-             -b, -c, a, v, \
-             -b, -c, -a, v, \
-              c, a, b, v, \
-              c, a, -b, v, \
-              c, -a, b, v, \
-              c, -a, -b, v, \
-             -c, a, b, v, \
-             -c, a, -b, v, \
-             -c, -a, b, v, \
-             -c, -a, -b, v, \
-              c, b, a, v, \
-              c, b, -a, v, \
-              c, -b, a, v, \
-              c, -b, -a, v, \
-             -c, b, a, v, \
-             -c, b, -a, v, \
-             -c, -b, a, v, \
-             -c, -b, -a, v;
+              a,   b,   c, v, \
+              a,   b,  -c, v, \
+              a,  -b,   c, v, \
+              a,  -b,  -c, v, \
+             -a,   b,   c, v, \
+             -a,   b,  -c, v, \
+             -a,  -b,   c, v, \
+             -a,  -b,  -c, v, \
+              a,   c,   b, v, \
+              a,   c,  -b, v, \
+              a,  -c,   b, v, \
+              a,  -c,  -b, v, \
+             -a,   c,   b, v, \
+             -a,   c,  -b, v, \
+             -a,  -c,   b, v, \
+             -a,  -c,  -b, v, \
+              b,   a,   c, v, \
+              b,   a,  -c, v, \
+              b,  -a,   c, v, \
+              b,  -a,  -c, v, \
+             -b,   a,   c, v, \
+             -b,   a,  -c, v, \
+             -b,  -a,   c, v, \
+             -b,  -a,  -c, v, \
+              b,   c,   a, v, \
+              b,   c,  -a, v, \
+              b,  -c,   a, v, \
+              b,  -c,  -a, v, \
+             -b,   c,   a, v, \
+             -b,   c,  -a, v, \
+             -b,  -c,   a, v, \
+             -b,  -c,  -a, v, \
+              c,   a,   b, v, \
+              c,   a,  -b, v, \
+              c,  -a,   b, v, \
+              c,  -a,  -b, v, \
+             -c,   a,   b, v, \
+             -c,   a,  -b, v, \
+             -c,  -a,   b, v, \
+             -c,  -a,  -b, v, \
+              c,   b,   a, v, \
+              c,   b,  -a, v, \
+              c,  -b,   a, v, \
+              c,  -b,  -a, v, \
+             -c,   b,   a, v, \
+             -c,   b,  -a, v, \
+             -c,  -b,   a, v, \
+             -c,  -b,  -a, v;
             return xyzw;
         };
 
