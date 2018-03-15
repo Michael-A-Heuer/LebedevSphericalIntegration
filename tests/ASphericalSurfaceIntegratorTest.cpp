@@ -7,7 +7,7 @@
 
 class UnitSphere : public SpatialFunction{
 public:
-    double value(const Eigen::Vector3d &x) const override {
+    double value(const Eigen::Vector3d &direction) const override {
         return 1.0;
     };
 };
