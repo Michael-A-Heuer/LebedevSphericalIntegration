@@ -14,10 +14,10 @@ public:
 
     virtual ~SpatialFunction() = default;
 
-    virtual double value(const Eigen::Vector3d &x) const = 0;
+    virtual double value(const Eigen::Vector3d &rvec) const = 0;
 
-    double operator()(const Eigen::Vector3d &x) const {
-        return value(x);
+    double operator()(const Eigen::Vector3d &rvec) const {
+        return value(rvec);
     };
 };
 
