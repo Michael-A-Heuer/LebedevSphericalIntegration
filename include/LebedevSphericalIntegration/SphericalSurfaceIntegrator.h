@@ -16,12 +16,12 @@ namespace Lebedev {
 
         double integrate(SpatialFunction* f, double r = 1) const {
             const auto& xyzw = gridCreator_.grid();
-            double integral = 0.0;
+            double sum = 0.0;
 
             for (int i = 0; i < xyzw.rows(); ++i) {
-                integral += f->value(r*xyzw.row(i).head(3)) * xyzw.row(i)[3];
+                sum += f->value(r*xyzw.row(i).head(3)) * xyzw.row(i)[3];
             }
-            return 4.0*M_PI*integral;
+            return 4.0*M_PI*sum;
         };
 
         void changeGrid(const OrderType& orderType){
