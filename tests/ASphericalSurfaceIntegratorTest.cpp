@@ -3,21 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include <LebedevSphericalIntegration/SphericalSurfaceIntegrator.h>
-
-class UnitSphere : public SpatialFunction{
-public:
-    double value(const Eigen::Vector3d &direction) const override {
-        return 1.0;
-    };
-};
-
-class Gauss3d : public SpatialFunction{
-public:
-    double value(const Eigen::Vector3d &rvec) const override {
-        return std::exp(-rvec.squaredNorm());
-    };
-};
+#include "LebedevSphericalIntegration/SphericalSurfaceIntegrator.h"
+#include "LebedevSphericalIntegration/TestFunctions.h"
 
 class ASphericalSurfaceIntegratorTest : public ::testing::Test {
 public:
