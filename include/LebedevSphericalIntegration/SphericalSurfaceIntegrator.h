@@ -24,13 +24,12 @@ namespace Lebedev {
             return 4*M_PI*integral;
         };
 
+        void changeGrid(const OrderType& orderType){
+            gridCreator_.changeGrid(orderType);
+        };
 
-    void changeGrid(const OrderType& orderType){
-        gridCreator_.changeGrid(orderType);
-    };
-
-    private:
-        GridCreator gridCreator_;
+        private:
+            GridCreator gridCreator_;
     };
 };
 
