@@ -14,14 +14,14 @@ namespace Lebedev {
         explicit SphericalSurfaceIntegrator(const OrderType& orderType = OrderType::LD0006)
                 : gridCreator_(orderType){};
 
-        double integrate(SpatialFunction &f) const {
+        double integrate(SpatialFunction* f, double r = 1) const {
             const auto& xyzw = gridCreator_.grid();
             double integral = 0.0;
 
             for (int i = 0; i < xyzw.rows(); ++i) {
-                integral += f.value(xyzw.row(i).head(3)) * xyzw.row(i)[3];
+                integral += f->value(r*xyzw.row(i).head(3)) * xyzw.row(i)[3];
             }
-            return 4*M_PI*integral;
+            return 4.0*M_PI*integral;
         };
 
         void changeGrid(const OrderType& orderType){

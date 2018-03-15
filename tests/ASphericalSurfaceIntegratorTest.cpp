@@ -27,7 +27,7 @@ TEST_F(ASphericalSurfaceIntegratorTest, UnitSphereSurface) {
 
     for (const auto & order : Lebedev::allOrders) {
         sphericalSurfaceIntegrator.changeGrid(order);
-        double calculated = sphericalSurfaceIntegrator.integrate(f);
+        double calculated = sphericalSurfaceIntegrator.integrate(&f);
 
         double relError = std::abs(calculated - reference) / (reference);
         ASSERT_LE(relError, 2.2052e-14);
