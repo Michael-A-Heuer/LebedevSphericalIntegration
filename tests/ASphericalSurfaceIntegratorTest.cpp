@@ -12,11 +12,10 @@ public:
     };
 };
 
-using namespace Lebedev;
 
 class ASphericalSurfaceIntegratorTest : public ::testing::Test {
 public:
-    SphericalSurfaceIntegrator sphericalSurfaceIntegrator;
+    Lebedev::SphericalSurfaceIntegrator sphericalSurfaceIntegrator;
     void SetUp() override {}
 };
 
