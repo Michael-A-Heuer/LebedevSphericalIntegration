@@ -9,11 +9,6 @@
 
 class SpatialFunction {
 public:
-
-    SpatialFunction() = default;
-
-    virtual ~SpatialFunction() = default;
-
     virtual double value(const Eigen::Vector3d &rvec) const = 0;
 
     double operator()(const Eigen::Vector3d &rvec) const {
