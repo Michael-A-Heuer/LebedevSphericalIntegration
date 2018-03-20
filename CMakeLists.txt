@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(LebedevSphericalIntegration CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 if(NOT BUILT_GOOGLETEST_ALREADY)
     # Download and unpack googletest at configure time
