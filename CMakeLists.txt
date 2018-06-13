@@ -4,29 +4,17 @@ project(LebedevSphericalIntegration CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-if(NOT BUILT_GOOGLETEST_ALREADY)
-    # Download and unpack googletest at configure time
-    configure_file(cmake/DownloadGoogleTest.in
-            googletest-download/CMakeLists.txt)
-    execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-    execute_process(COMMAND ${CMAKE_COMMAND} --build .
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+add_library(${PROJECT_NAME} INTERFACE)
 
-    # Prevent GoogleTest from overriding our compiler/linker options
-    # when building with Visual Studio
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-    # Add googletest directly to our build. This adds
-    # the following targets: gtest, gtest_main, gmock
-    # and gmock_main
-    add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src ${CMAKE_BINARY_DIR}/googletest-build)
+if(NOT TARGET eigen)
+    include(cmake/DownloadEigen.cmake)
 endif()
 
-find_package(Eigen3 REQUIRED)
-include_directories( ${EIGEN3_INCLUDE_DIR} )
+if(NOT TARGET gtest)
+    include(cmake/DownloadGoogleTest.cmake)
+endif()
 
-add_library(${PROJECT_NAME} INTERFACE)
+target_link_libraries(${PROJECT_NAME} INTERFACE eigen)
 
 target_include_directories(${PROJECT_NAME} INTERFACE include/)
 
