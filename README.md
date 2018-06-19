@@ -7,7 +7,7 @@
 The Lebedev quadrature grid calculation is a complete remake of
 John Burkardt's
 [**sphere_lebedev_rule**](http://people.sc.fsu.edu/~jburkardt/f_src/sphere_lebedev_rule/sphere_lebedev_rule.html)
-library using the **Eigen3** library and modern **C++11**.
+library using the **Eigen3** library and modern **C++14**.
 The original code is included for testing purposes.
 
 **Reference to the used algorithms and numerical values:**
