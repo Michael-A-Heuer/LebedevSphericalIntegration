@@ -23,4 +23,4 @@ The original code is included for testing purposes.
 
 ## Installation
 
-Just include the repository as a subdirectory in your CMake build or link to the `SphericalIntegration.h` file directly.
+Just include the repository as a subdirectory in your CMake build or link the `.h` files directly.
